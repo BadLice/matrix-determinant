@@ -1,0 +1,16 @@
+<script type="text/javascript" src="sketch.js"></script>
+
+Size of Matrix (rows=columns):
+<select id="size" onchange="setSize();">
+  <script type="text/javascript">
+    writeSizes();
+  </script>
+</select>
+
+<div id="matrix">
+
+</div>
+
+<input type="button" value="Calculate" onclick="calculate();">
+<p>RESULT:</p>
+<p id="result"></p>
