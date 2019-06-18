@@ -1,6 +1,7 @@
 <script type="text/javascript" src="sketch.js"></script>
-
+<a id="label">
 Size of Matrix (rows=columns):
+</a>
 <select id="size" onchange="setSize();">
   <script type="text/javascript">
     writeSizes();
@@ -12,5 +13,56 @@ Size of Matrix (rows=columns):
 </div>
 
 <input type="button" value="Calculate" onclick="calculate();">
-<p>RESULT:</p>
-<p id="result"></p>
+<div id="res-container">
+	<a id="res-label">RESULT:</a>
+	<a id="result"></a>
+</div>
+
+<style type="text/css">
+	*
+	{
+		font-family: Verdana, Geneva, sans-serif;
+	}
+
+	#size
+	{
+		border-radius: 5px;
+		border-color: red;
+		width:100px;
+	}
+	input[type=button]
+	{
+		background-color:#2196F3;
+		padding: 8px 16px;
+		color:white;
+		border:none;
+		transition: box-shadow 0.2s;
+		transition: background-color 0.1s;
+	}
+
+	input[type=button]:hover
+	{
+		-moz-box-shadow: 1px 1px 5px #999;
+    	-webkit-box-shadow: 1px 1px 5px #999;
+        box-shadow: 1px 1px 5px #999;
+	}
+
+	input[type=button]:active
+	{
+		background-color: blue;
+	}
+
+	#res-label
+	{
+		display: inline-block;
+		color:purple;
+	}
+
+	#res-container
+	{
+		border-bottom: 1px solid #990000;
+		width:200px;
+	}
+
+
+</style>
