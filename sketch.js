@@ -18,20 +18,26 @@
 // ];
 
 var size = 0;
+var state = 0; //0 = size not selected, 1 = size selected, 2 = result calculated, 3 matrix filled
+var precm;
 
 function calculate()
 {
-	var items = [];
-	for (var i = 0; i < size; i++)
-	{
-		items.push([]);
-		for (var j = 0; j < size; j++)
+	if(isFilledMatrix())
+	{		
+		var items = [];
+		for (var i = 0; i < size; i++)
 		{
-			items[i].push(document.getElementById(i + "-" + j).value);
+			items.push([]);
+			for (var j = 0; j < size; j++)
+			{
+				items[i].push(document.getElementById(i + "-" + j).value);
+			}
 		}
-	}
 
-	document.getElementById("result").innerHTML = determinant(items);
+		document.getElementById("result").innerHTML = determinant(items);
+		state = 2;
+	}
 }
 
 function determinant(mat)
@@ -87,16 +93,122 @@ function setSize(s)
 	{
 		for (var j = 0; j < s; j++)
 		{
-			m.innerHTML += "<input id=\"" + i + "-" + j + "\" >";
+			m.innerHTML += "<input id=\"" + i + "-" + j + "\" class=\"matrix-item\" onkeypress=\"enterPressed(event)\" />";
 
 		}
 		m.innerHTML += "<br>";
 	}
 	size = s;
+	state = 1;
+
+	if(size==0)
+		document.getElementById("matrix").style.borderColor="transparent";
+	else
+		document.getElementById("matrix").style.width = size * document.getElementsByClassName("matrix-item")[0].offsetWidth
 }
 
 function writeSizes()
 {
-	for (var i = 0; i < 10; i++)
-		document.write("  <option value=" + i + ">" + i + "</option>");
+	document.write("<option value=\"0\">---</option>");
+	for (var i = 1; i < 10; i++)
+		document.write("<option value=" + i + ">" + i + "</option>");
+	state = 0;
+}
+
+var intervalID = window.setInterval(function()
+	{
+		if(state === 0)
+			document.getElementById("size").style.borderColor = "rgb("+getRandomColor()+","+getRandomColor()+","+getRandomColor()+")";
+		if(state === 1 && size != 0)
+		{
+			if(isFilledMatrix())
+				state=3;
+			document.getElementById("matrix").style.borderColor = "rgb("+getRandomColor()+","+getRandomColor()+","+getRandomColor()+")";
+		}
+		if(state === 2)
+			document.getElementById("result").style.borderColor = "rgb("+getRandomColor()+","+getRandomColor()+","+getRandomColor()+")";
+
+		if(state === 3)
+			document.getElementById("calc-button").style.backgroundColor = "rgb("+getRandomColor()+","+getRandomColor()+","+getRandomColor()+")";
+		
+		if(!isFilledMatrix())
+		{
+			state=1;
+			clearResult();
+		}
+		if(isChangedMatrix())
+		{
+			state=3;
+			clearResult();
+		}
+	}, 100);
+
+function getRandomColor()
+{
+	return Math.floor(Math.random()*256);
+}
+
+function isFilledMatrix()
+{
+	for (var i = size - 1; i >= 0; i--)
+	{
+		for (var j = size - 1; j >= 0; j--) {
+			if(document.getElementById(i + "-" + j).value.length === 0)
+				return false;
+		}
+	}
+
+	return true;
+}
+
+function enterPressed(event)
+{
+	if(event.keyCode == 13)
+	{
+	   calculate();
+	}
+}
+
+function isChangedMatrix()
+{
+	
+	
+	if(state === 2)
+	{
+		var equals = true;
+		var m = [];
+
+		for (var i = size - 1; i >= 0; i--)
+		{
+			m.push(new Array());
+			for (var j = size - 1; j >= 0; j--)
+			{
+				m[i].push(document.getElementById(i+'-'+j).value);
+			}
+		}
+
+		if(precm !== undefined)
+		{
+			equals=true;
+			for (var i = m.length - 1 && equals; i >= 0; i--)
+			{
+				for (var j = m.length - 1 && equals; j >= 0; j--)
+				{
+					equals = m[i][j]==precm[i][j];
+				}
+			}
+		}
+
+		precm = m;
+		return !equals;
+	}
+	else
+		return false;
+
+	
+}
+
+function clearResult()
+{
+	document.getElementById("result").innerHTML = '&nbsp;';
 }

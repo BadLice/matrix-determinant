@@ -1,37 +1,40 @@
 <script type="text/javascript" src="sketch.js"></script>
-<a id="label">
-Size of Matrix (rows=columns):
-</a>
-<select id="size" onchange="setSize();">
-  <script type="text/javascript">
-    writeSizes();
-  </script>
-</select>
 
-<div id="matrix">
+<center id="main-container">
+	<div id="secondary-container">
+		<a id="label">
+			Size of Matrix (rows=columns)
+		</a>
 
-</div>
+		<select id="size" onchange="setSize();">
+		  <script type="text/javascript">
+		    writeSizes();
+		  </script>
+		</select>
 
-<input type="button" value="Calculate" onclick="calculate();">
-<div id="res-container">
-	<a id="res-label">RESULT:</a>
-	<a id="result"></a>
-</div>
+		<div id="matrix">
+		</div>
+		<input id="calc-button" type="button" value="Calculate" onclick="calculate();">
+		<div id="res-container">
+			<a id="res-label">RESULT</a>
+			<a id="result">&nbsp;</a>
+		</div>
+	</div>
+</center>
 
 <style type="text/css">
+	body
+	{
+		background-color: rgb(51,51,51);
+	}
 	*
 	{
 		font-family: Verdana, Geneva, sans-serif;
 	}
 
-	#size
+	#calc-button
 	{
-		border-radius: 5px;
-		border-color: red;
-		width:100px;
-	}
-	input[type=button]
-	{
+		margin-top:10px; 
 		background-color:#2196F3;
 		padding: 8px 16px;
 		color:white;
@@ -40,29 +43,76 @@ Size of Matrix (rows=columns):
 		transition: background-color 0.1s;
 	}
 
-	input[type=button]:hover
+	#calc-button:hover
 	{
 		-moz-box-shadow: 1px 1px 5px #999;
     	-webkit-box-shadow: 1px 1px 5px #999;
         box-shadow: 1px 1px 5px #999;
 	}
 
-	input[type=button]:active
+	#calc-button:active
 	{
 		background-color: blue;
+	}
+
+	#size
+	{
+		background-color: grey;
+		border-color: red;
+		width:100px;
+		margin-top:10px;
+		color:white;
+		text-align: center;
 	}
 
 	#res-label
 	{
 		display: inline-block;
 		color:purple;
+		margin-top: 10px;
 	}
 
 	#res-container
 	{
-		border-bottom: 1px solid #990000;
+		border-top: 1px solid white;
 		width:200px;
+		margin-top:15px;
 	}
 
+	#label
+	{
+		color: orange;
+		margin-top:10px;
+		display: block;
+		width:260px;
+	}
+	#secondary-container
+	{
+		border:1px solid blue;
+		width:500px;
+	}
+	#matrix
+	{
+		margin-top: 10px;
+		border: 1px solid transparent;
+		width:450px;
+	}
+	.matrix-item
+	{
+		width:50px;
+		background-color: black;
+		color:white;
+		border:1px solid grey;
+		text-align:center;
+	}
+	#result
+	{
+		margin-top:10px;
+		display: block;
+		border:1px solid ;
+		width:100px;
+		color:white;
+		margin-bottom:15px;
+	}
 
 </style>
