@@ -141,6 +141,8 @@ var intervalID = window.setInterval(function()
 			state=3;
 			clearResult();
 		}
+		if(size==0)
+			state=0;
 	}, 100);
 
 function getRandomColor()
